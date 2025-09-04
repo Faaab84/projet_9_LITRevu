@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!-- reviews/templates/reviews/show_commentaire_form.html -->
+{% extends 'base.html' %}
+{% block title %}Commentaire - LITRevu{% endblock %}
+{% block content %}
+    <h1>{% if billet %}Commentaire pour "{{ billet.title }}"{% else %}Créer un commentaire{% endif %}</h1>
+    <form method="post" aria-label="Formulaire de création de commentaire">
+        {% csrf_token %}
+        {{ commentaire_form.as_p }}
+        <button type="submit" class="btn" aria-label="Publier le commentaire">Publier</button>
+    </form>
+{% endblock %}

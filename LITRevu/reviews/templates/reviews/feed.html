@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2>Votre flux</h2>
+    <br><br>
+    <table width="100%" cellpadding="10">
+        <tr>
+            <td align="left">
+                <a href="{% url 'reviews:show-billet-form' %}" class="btn btn-primary">Demander une critique</a>
+            </td>
+            <td align="right" style="padding-right: 30px;">
+                <a href="{% url 'reviews:billet-and-commentaire-create' %}" class="btn btn-primary">Créer une critique</a>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if posts %}
+        {% for post in posts %}
+            {% if post.content_type == 'BILLET' %}
+                {% include 'reviews/billet_snippet.html' with billet=post %}
+            {% elif post.content_type == 'COMMENTAIRE' %}
+                {% include 'reviews/commentaire_snippet.html' with commentaire=post %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>Aucun billet ou critique à afficher pour le moment. Suivez des utilisateurs ou créez un billet !</p>
+    {% endif %}
+{% endblock %}

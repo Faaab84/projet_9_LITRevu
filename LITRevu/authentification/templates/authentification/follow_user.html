@@ -1,24 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Gérer vos abonnements</h2>
-
-    <!-- Formulaire pour suivre un utilisateur -->
-    <form method="post">
+    <form method="post" aria-label="Suivre un utilisateur">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Suivre</button>
     </form>
-
-    <!-- Messages de succès/erreur -->
     {% if messages %}
-        <ul class="messages">
+        <ul class="messages" aria-live="polite">
             {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
-
-    <!-- Liste des utilisateurs suivis -->
     <h3>Utilisateurs suivis</h3>
     {% if following %}
         <ul>
@@ -32,8 +26,6 @@
     {% else %}
         <p>Vous ne suivez aucun utilisateur.</p>
     {% endif %}
-
-    <!-- Liste des followers -->
     <h3>Vos followers</h3>
     {% if followers %}
         <ul>
@@ -44,4 +36,6 @@
     {% else %}
         <p>Personne ne vous suit pour le moment.</p>
     {% endif %}
+    <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+    <a href="{% url 'authentification:logout' %}" class="btn btn-secondary">Se déconnecter</a>
 {% endblock %}

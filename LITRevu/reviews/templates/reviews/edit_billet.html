@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2>Modifier votre billet</h2>
+    <form method="post" action="{% url 'reviews:edit-billet' billet.id %}" enctype="multipart/form-data" aria-label="Modifier un billet">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+{% endblock %}

@@ -9,10 +9,30 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
+            margin: 0;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .logout {
+            margin-right: 20px;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
             background: white;
             border-radius: 8px;
@@ -34,6 +54,8 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
         .btn:hover {
             background-color: #0056b3;
@@ -51,9 +73,40 @@
             background-color: #f8d7da;
             color: #721c24;
         }
+        .login-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .signup-section, .login-section {
+            flex: 1;
+            padding: 20px;
+        }
+        .signup-section {
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .login-container {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'reviews:feed' %}" aria-label="Flux">Flux</a>
+                <a href="{% url 'reviews:show-billet-form' %}" aria-label="Demander une critique">Demander une critique</a>
+                <a href="{% url 'reviews:create-commentaire' %}" aria-label="Créer une critique ">Créer une critique</a>
+                <a href="{% url 'reviews:create-billet-and-commentaire' %}" aria-label="Créer une critique d'une demande">Créer une critique d'une demande</a>
+                <a href="{% url 'authentification:follow-user' %}" aria-label="Suivre des utilisateurs">Suivre</a>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'authentification:logout' %}" class="btn logout" aria-label="Se déconnecter">Se déconnecter</a>
+        {% endif %}
+    </div>
     <div class="container">
         {% if messages %}
             {% for message in messages %}

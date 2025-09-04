@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2 style="text-align: center;">Modifier votre critique</h2>
+    {% if commentaire.billet %}
+        <div class="response-container border p-3 mb-3">
+            <p class="response-text">Vous êtes en train de poster en réponse à</p>
+            <div class="billet border p-3">
+                <h3>{{ commentaire.billet.title }}</h3>
+                <p class="date-right">Publié par {{ commentaire.billet.user.username }} le {{ commentaire.billet.time_created|date:"d/m/Y H:i" }}</p>
+                {% if commentaire.billet.description %}
+                    <p>{{ commentaire.billet.description }}</p>
+                {% endif %}
+                {% if commentaire.billet.image %}
+                    <img src="{{ commentaire.billet.image.url }}" alt="Image pour {{ commentaire.billet.title }}" style="max-width: 200px;">
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="commentaire-form border p-3 mb-3">
+        <form method="post" action="{% url 'reviews:edit-commentaire' commentaire.id %}" aria-label="Modifier une critique">
+            {% csrf_token %}
+            <div class="form-group">
+                <p>Critique :</p>
+                {{ form.headline.label_tag }}
+                {{ form.headline }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.rating.id_for_label }}">Note :</label>
+                <table class="rating-table">
+                    <tr>
+                        {% for radio in form.rating %}
+                            <td class="rating-cell">{{ radio }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                {{ form.body.label_tag }}
+                {{ form.body }}
+            </div>
+            <hr class="form-divider">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+    <div style="text-align: right;">
+        <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+    </div>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

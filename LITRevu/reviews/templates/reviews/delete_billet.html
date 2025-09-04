@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% load static %}
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Supprimer le billet</h2>
+    <p>Êtes-vous sûr de vouloir supprimer "{{ billet.title }}" ?</p>
+    <form method="post" action="{% url 'reviews:delete-billet' billet.id %}" aria-label="Confirmer la suppression du billet">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+{% endblock %}

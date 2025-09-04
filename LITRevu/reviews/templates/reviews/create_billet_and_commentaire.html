@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2 style="text-align: center;">Créer une critique</h2>
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f8f9fa;">
+        <div class="response-container border p-3 mb-3" style="background-color: #f8f9fa;">
+            <p><strong>Billet :</strong></p>
+            <div class="billet border p-3" style="background-color: #fff;">
+                <form method="post" action="{% url 'reviews:billet-and-commentaire-create' %}" enctype="multipart/form-data" id="form-create-billet-and-commentaire" aria-label="Créer un billet et une critique">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ billet_form.title.id_for_label }}">Titre :</label>
+                        {{ billet_form.title }}
+                    </div>
+                    <div class="form-group">
+                        {{ billet_form.description.label_tag }}
+                        {{ billet_form.description }}
+                    </div>
+                    <div class="form-group">
+                        {{ billet_form.image.label_tag }}
+                        {{ billet_form.image }}
+                    </div>
+            </div>
+        </div>
+        <div class="commentaire-form border p-3 mb-3" style="background-color: #f8f9fa;">
+            <p><strong>Critique :</strong></p>
+            <div class="border p-3" style="background-color: #fff;">
+                    <div class="form-group">
+                        {{ commentaire_form.headline.label_tag }}
+                        {{ commentaire_form.headline }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ commentaire_form.rating.id_for_label }}">Note :</label>
+                        <table class="rating-table">
+                            <tr>
+                                {% for radio in commentaire_form.rating %}
+                                    <td class="rating-cell">{{ radio }}</td>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        {{ commentaire_form.body.label_tag }}
+                        {{ commentaire_form.body }}
+                    </div>
+                    <hr class="form-divider">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+        <div style="text-align: right; margin-top: 10px;">
+            <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+        </div>
+    </div>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

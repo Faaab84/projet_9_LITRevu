@@ -1,0 +1,11 @@
+<!-- reviews/templates/reviews/show_review_form.html -->
+{% extends 'base.html' %}
+{% block title %}Créer une critique - LITRevu{% endblock %}
+{% block content %}
+    <h1>Créer une critique {% if ticket %}pour "{{ ticket.title }}"{% endif %}</h1>
+    <form method="post" aria-label="Formulaire de création de critique">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <button type="submit" class="btn" aria-label="Publier la critique">Publier</button>
+    </form>
+{% endblock %}

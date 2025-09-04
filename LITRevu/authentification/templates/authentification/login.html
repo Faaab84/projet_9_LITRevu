@@ -1,0 +1,20 @@
+<!-- authentification/templates/login.html -->
+{% extends 'base.html' %}
+{% block title %}Connexion - LITRevu{% endblock %}
+{% block content %}
+    <h1>Connexion</h1>
+    <div class="login-container">
+        <div class="signup-section">
+            <h2>Inscrivez-vous maintenant</h2>
+            <a href="{% url 'authentification:register' %}" class="btn" aria-label="S’inscrire">S’inscrire</a>
+        </div>
+        <div class="login-section">
+            <h2>Connectez-vous</h2>
+            <form method="post" aria-label="Formulaire de connexion">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn" aria-label="Se connecter">Se connecter</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

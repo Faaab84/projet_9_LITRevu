@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Gérer vos abonnements</h2>
+
+    <!-- Formulaire pour suivre un utilisateur -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Suivre</button>
+    </form>
+
+    <!-- Messages de succès/erreur -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Liste des utilisateurs suivis -->
+    <h3>Utilisateurs suivis</h3>
+    {% if following %}
+        <ul>
+            {% for user in following %}
+                <li>
+                    {{ user.username }}
+                    <a href="{% url 'authentification:unfollow-user' user.id %}" class="btn btn-danger btn-sm">Ne plus suivre</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous ne suivez aucun utilisateur.</p>
+    {% endif %}
+
+    <!-- Liste des followers -->
+    <h3>Vos followers</h3>
+    {% if followers %}
+        <ul>
+            {% for user in followers %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Personne ne vous suit pour le moment.</p>
+    {% endif %}
+{% endblock %}

@@ -19,13 +19,13 @@ Ce projet a été réalisé dans le cadre de la formation “Développeur d'appl
 
 - Python 3.10.12
 - pip
-- virtualenv (facultatif mais recommandé)
+- virtualenv
 
 ### Installation
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/MagNott/P9_Developpez_application_web_django.git
+git clone https://github.com/Faaab84/projet_9_LITRevu.git
 cd litrevu
 
 # Créer et activer un environnement virtuel

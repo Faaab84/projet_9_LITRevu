@@ -4,6 +4,9 @@
 # Ignorer un dossier
 node_modules/
 env/
+LITRevu/.idea/
+LITRevu/.git/
+LITRevu/__pycache__/
 .git/
 .idea/
 __pycache__

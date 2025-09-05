@@ -10,24 +10,11 @@
 .nav-link {
     margin-left: 10px;
 }
-.billet, .commentaire, .commentaire-form, .response-container {
+.billet, .commentaire {
     border: 1px solid #ddd;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 5px;
-}
-.billet, .commentaire-form, .response-container {
-    background-color: #f8f9fa;
-}
-.critique-section {
-    margin-top: 20px;
-}
-.response-text {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.date-right {
-    text-align: right;
 }
 .messages {
     list-style-type: none;
@@ -45,23 +32,4 @@
 .messages .error {
     background-color: #f8d7da;
     color: #721c24;
-}
-.rating-table {
-    display: table;
-    margin-bottom: 15px;
-}
-.rating-cell {
-    display: table-cell;
-    padding: 0 15px;
-    text-align: center;
-}
-.form-check-input {
-    margin-right: 5px;
-}
-.form-divider {
-    margin: 15px 0;
-    border-top: 1px solid #ddd;
-}
-.form-group {
-    margin-bottom: 15px;
 }

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2 style="text-align: center;">Modifier une critique</h2>
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f8f9fa;">
+        <div class="response-container border p-3 mb-3" style="background-color: #f8f9fa;">
+            <p><strong>Critique :</strong></p>
+            <div class="billet border p-3" style="background-color: #fff;">
+                <form method="post" action="{% url 'reviews:edit-commentaire' commentaire.id %}" id="form-edit-commentaire-{{ commentaire.id }}" aria-label="Modifier une critique">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.headline.label_tag }}
+                        {{ form.headline }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.rating.id_for_label }}">Note :</label>
+                        <table class="rating-table">
+                            <tr>
+                                {% for radio in form.rating %}
+                                    <td class="rating-cell">{{ radio }}</td>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        {{ form.body.label_tag }}
+                        {{ form.body }}
+                    </div>
+                    <hr class="form-divider">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+        <div style="text-align: right; margin-top: 10px;">
+            <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+        </div>
+    </div>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -44,6 +44,7 @@
       <option name="ignoredErrors">
         <list>
           <option value="E303" />
+          <option value="E231" />
         </list>
       </option>
     </inspection_tool>
@@ -61,6 +62,7 @@
           <option value="requests" />
           <option value="models.tournament.Tournois.deserialiser_json" />
           <option value="models.round.Tour.from_save" />
+          <option value="LITRevu.reviews.models.authentification" />
         </list>
       </option>
     </inspection_tool>

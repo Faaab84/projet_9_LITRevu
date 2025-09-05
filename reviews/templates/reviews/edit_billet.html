@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2 style="text-align: center;">Modifier un billet</h2>
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f8f9fa;">
+        <div class="response-container border p-3 mb-3" style="background-color: #f8f9fa;">
+            <p><strong>Billet :</strong></p>
+            <div class="billet border p-3" style="background-color: #fff;">
+                <form method="post" action="{% url 'reviews:edit-billet' billet.id %}" enctype="multipart/form-data" id="form-edit-billet-{{ billet.id }}" aria-label="Modifier un billet">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}">Titre :</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.image.label_tag }}
+                        {{ form.image }}
+                    </div>
+                    <hr class="form-divider">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+        <div style="text-align: right; margin-top: 10px;">
+            <a href="{% url 'reviews:feed' %}" class="btn btn-secondary">Retour au flux</a>
+        </div>
+    </div>
+    {% if messages %}
+        <ul class="messages" aria-live="polite">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

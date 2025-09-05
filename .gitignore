@@ -1,0 +1,17 @@
+# Ignorer les fichiers de logs
+*.log
+
+# Ignorer un dossier
+node_modules/
+env/
+.git/
+.idea/
+__pycache__
+authentification/__pycache__/
+reviews/__pycache__/
+
+# Ignorer un fichier spécifique
+config.secret
+
+# Ignorer tous les fichiers .env
+.env

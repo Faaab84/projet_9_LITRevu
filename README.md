@@ -53,8 +53,8 @@ atière d’accessibilité, ce qui facilite la conformité aux normes WCAG.
 
 ## Technologies utilisées & qualité du code
 
-- Python 3.10.12
-- Django 5.2.1
+- Python 3.13.2
+- Django 5.2.5
 - SQLite (base intégrée pour test local)
 - Bootstrap 
 - Pillow (upload images)

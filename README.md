@@ -26,7 +26,7 @@ Ce projet a été réalisé dans le cadre de la formation “Développeur d'appl
 ```bash
 # Cloner le dépôt
 git clone https://github.com/Faaab84/projet_9_LITRevu.git
-cd litrevu
+cd projet_9_LITRevu
 
 # Créer et activer un environnement virtuel
 python -m venv env
@@ -36,6 +36,7 @@ source env/bin/activate  # ou env\Scripts\activate sous Windows
 pip install -r requirements.txt
 
 # Lancer le serveur local
+cd LITRevu
 python manage.py runserver
 
 Accéder à l'application à l’adresse : http://localhost:8000/login

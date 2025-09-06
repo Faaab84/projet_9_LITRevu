@@ -7,37 +7,63 @@ from django.contrib.auth import get_user_model
 from itertools import chain
 from django.db.models import CharField, Value, Q
 
+
 @login_required
 def feed(request):
+    """Affiche le flux des billets et commentaires des utilisateurs suivis et de l'utilisateur connecté."""
     User = get_user_model()
     followed_users = request.user.following.all()
-    billets = Billet.objects.filter(user__in=followed_users) | Billet.objects.filter(user=request.user)
-    commentaires = Commentaire.objects.filter(user__in=followed_users) | Commentaire.objects.filter(user=request.user) | Commentaire.objects.filter(billet__user=request.user)
+    billets = Billet.objects.filter(
+        user__in=followed_users
+    ) | Billet.objects.filter(user=request.user)
+    commentaires = Commentaire.objects.filter(
+        user__in=followed_users
+    ) | Commentaire.objects.filter(
+        user=request.user
+    ) | Commentaire.objects.filter(billet__user=request.user)
     billets = billets.annotate(content_type=Value('BILLET', CharField()))
     commentaires = commentaires.annotate(content_type=Value('COMMENTAIRE', CharField()))
     for billet in billets:
-        billet.has_commentaire = billet.commentaire_set.filter(user=request.user).exists()
-    posts = sorted(chain(billets, commentaires), key=lambda post: post.time_created, reverse=True)
+        billet.has_commentaire = billet.commentaire_set.filter(
+            user=request.user
+        ).exists()
+    posts = sorted(
+        chain(billets, commentaires),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
     return render(request, "reviews/feed.html", {"posts": posts, "is_feed": True})
+
 
 @login_required
 def posts(request):
+    """Affiche les billets et commentaires de l'utilisateur connecté."""
     billets = Billet.objects.filter(user=request.user)
     commentaires = Commentaire.objects.filter(user=request.user)
     billets = billets.annotate(content_type=Value('BILLET', CharField()))
     commentaires = commentaires.annotate(content_type=Value('COMMENTAIRE', CharField()))
     for billet in billets:
-        billet.has_commentaire = billet.commentaire_set.filter(user=request.user).exists()
-    user_posts = sorted(chain(billets, commentaires), key=lambda post: post.time_created, reverse=True)
+        billet.has_commentaire = billet.commentaire_set.filter(
+            user=request.user
+        ).exists()
+    user_posts = sorted(
+        chain(billets, commentaires),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
     return render(request, "reviews/posts.html", {"posts": user_posts, "is_feed": False})
+
 
 @login_required
 def show_billet_form(request):
+    """Affiche le formulaire de création d'un billet."""
     form = RequestBilletForm()
     return render(request, "reviews/show_billet_form.html", {"form": form})
 
+
 @login_required
 def create_billet(request):
+    """Crée un nouveau billet à partir des données soumises."""
     if request.method == "POST":
         form = RequestBilletForm(request.POST, request.FILES)
         if form.is_valid():
@@ -46,14 +72,15 @@ def create_billet(request):
             billet.save()
             messages.success(request, f"Billet '{billet.title}' créé avec succès.")
             return redirect("reviews:feed")
-        else:
-            messages.error(request, "Erreur dans le formulaire. Vérifiez les champs.")
+        messages.error(request, "Erreur dans le formulaire. Vérifiez les champs.")
     else:
         form = RequestBilletForm()
     return render(request, "reviews/show_billet_form.html", {"form": form})
 
+
 @login_required
 def edit_billet(request, billet_id):
+    """Modifie un billet existant."""
     billet = get_object_or_404(Billet, id=billet_id, user=request.user)
     if request.method == "POST":
         form = RequestBilletForm(request.POST, request.FILES, instance=billet)
@@ -61,14 +88,15 @@ def edit_billet(request, billet_id):
             form.save()
             messages.success(request, "Billet modifié avec succès.")
             return redirect("reviews:feed")
-        else:
-            messages.error(request, "Erreur dans le formulaire.")
+        messages.error(request, "Erreur dans le formulaire.")
     else:
         form = RequestBilletForm(instance=billet)
     return render(request, "reviews/edit_billet.html", {"form": form, "billet": billet})
 
+
 @login_required
 def delete_billet(request, billet_id):
+    """Supprime un billet existant."""
     billet = get_object_or_404(Billet, id=billet_id, user=request.user)
     if request.method == "POST":
         billet.delete()
@@ -76,11 +104,17 @@ def delete_billet(request, billet_id):
         return redirect("reviews:feed")
     return render(request, "reviews/delete_billet.html", {"billet": billet})
 
+
 @login_required
 def create_commentaire(request, billet_id=None):
+    """Crée un commentaire, optionnellement lié à un billet."""
     if billet_id:
-        # Autoriser l'accès si le billet appartient à l'utilisateur ou à un suivi
-        billet = get_object_or_404(Billet, Q(id=billet_id) & (Q(user__in=request.user.following.all()) | Q(user=request.user)))
+        billet = get_object_or_404(
+            Billet,
+            Q(id=billet_id) & (
+                Q(user__in=request.user.following.all()) | Q(user=request.user)
+            )
+        )
     else:
         billet = None
     if request.method == "POST":
@@ -92,14 +126,15 @@ def create_commentaire(request, billet_id=None):
             commentaire.save()
             messages.success(request, "Critique créée avec succès.")
             return redirect("reviews:feed")
-        else:
-            messages.error(request, "Erreur dans le formulaire.")
+        messages.error(request, "Erreur dans le formulaire.")
     else:
         form = RequestCommentaireForm()
     return render(request, "reviews/create_commentaire.html", {"form": form, "billet": billet})
 
+
 @login_required
 def edit_commentaire(request, commentaire_id):
+    """Modifie un commentaire existant."""
     commentaire = get_object_or_404(Commentaire, id=commentaire_id, user=request.user)
     if request.method == "POST":
         form = RequestCommentaireForm(request.POST, instance=commentaire)
@@ -107,23 +142,34 @@ def edit_commentaire(request, commentaire_id):
             form.save()
             messages.success(request, "Critique modifiée avec succès.")
             return redirect("reviews:feed")
-        else:
-            messages.error(request, "Erreur dans le formulaire.")
+        messages.error(request, "Erreur dans le formulaire.")
     else:
         form = RequestCommentaireForm(instance=commentaire)
-    return render(request, "reviews/edit_commentaire.html", {"form": form, "commentaire": commentaire})
+    return render(
+        request,
+        "reviews/edit_commentaire.html",
+        {"form": form, "commentaire": commentaire}
+    )
+
 
 @login_required
 def delete_commentaire(request, commentaire_id):
+    """Supprime un commentaire existant."""
     commentaire = get_object_or_404(Commentaire, id=commentaire_id, user=request.user)
     if request.method == "POST":
         commentaire.delete()
         messages.success(request, "Critique supprimée avec succès.")
         return redirect("reviews:feed")
-    return render(request, "reviews/delete_commentaire.html", {"commentaire": commentaire})
+    return render(
+        request,
+        "reviews/delete_commentaire.html",
+        {"commentaire": commentaire}
+    )
+
 
 @login_required
 def create_billet_and_commentaire(request):
+    """Crée simultanément un billet et un commentaire."""
     billet_form = RequestBilletForm()
     commentaire_form = RequestCommentaireForm()
     if request.method == "POST":
@@ -139,9 +185,9 @@ def create_billet_and_commentaire(request):
             commentaire.save()
             messages.success(request, "Billet et critique créés avec succès.")
             return redirect("reviews:feed")
-        else:
-            messages.error(request, "Erreur dans le formulaire.")
-    return render(request, "reviews/create_billet_and_commentaire.html", {
-        "billet_form": billet_form,
-        "commentaire_form": commentaire_form
-    })
+        messages.error(request, "Erreur dans le formulaire.")
+    return render(
+        request,
+        "reviews/create_billet_and_commentaire.html",
+        {"billet_form": billet_form, "commentaire_form": commentaire_form}
+    )

@@ -17,7 +17,7 @@ Ce projet a été réalisé dans le cadre de la formation “Développeur d'appl
 
 ### Prérequis
 
-- Python 3.10.12
+- Python 3.13.2
 - pip
 - virtualenv
 
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 # Lancer le serveur local
 python manage.py runserver
 
-Accéder à l'application à l’adresse : http://localhost:8000
+Accéder à l'application à l’adresse : http://localhost:8000/login
 ```
 
 ##  Style & CSS
@@ -61,7 +61,7 @@ litrevu/
 │
 ├── litrevu/               # Configuration principale du projet Django
 │   ├── settings.py        # Paramètres globaux (BDD, apps, sécurité…)
-│   └── urls.py            # Routage principal
+│   └── urls.py            # Routage principal des urls
 │
 ├── reviews/               # App principale (tickets,critiques, feed...)
 │   ├── models/            # A l'intérieur des dossiers suivants, il y a un fichier par entité
@@ -73,7 +73,7 @@ litrevu/
 ├── static/                # Fichiers statiques (CSS, images)
 ├── templates/             # Templates globaux (base.html, etc.)
 │── db.sqlite3             # Base de données SQLite (fournie pour les tests)
-├── manage.py
+├── manage.pypip ins
 ├── requirements.txt       # Liste des dépendances du projet
 ├── README.md              # Ce fichier
 ```

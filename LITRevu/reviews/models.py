@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from authentification.models import CustomUser
 
+
 class Billet(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
@@ -11,6 +12,7 @@ class Billet(models.Model):
 
     def __str__(self):
         return f"{self.title}, {self.user}, {self.time_created}"
+
 
 class Commentaire(models.Model):
     RATING_CHOICES = [(i, f"{i}") for i in range(0, 6)]

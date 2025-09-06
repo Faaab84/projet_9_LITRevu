@@ -1,3 +1,9 @@
+"""Module définissant les URL pour l'application d'authentification.
+
+Ce module configure les chemins d'URL pour l'inscription, la connexion,
+la déconnexion, et la gestion des relations de suivi entre utilisateurs.
+"""
+
 from django.urls import path
 from . import views
 

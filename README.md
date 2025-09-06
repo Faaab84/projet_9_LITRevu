@@ -45,60 +45,33 @@ Accéder à l'application à l’adresse : http://localhost:8000/login
 
 Le projet utilise :
 
-- Bootstrap 5 (personnalisé avec le thème Bootswatch United) intègre par défaut des bonnes pratiques en matière d’accessibilité, ce qui facilite la conformité aux normes WCAG.
+atière d’accessibilité, ce qui facilite la conformité aux normes WCAG.
 - Des variables SCSS personnalisées (couleurs, contrastes, boutons…)
-- Les fichiers CSS personnalisés sont situés dans static/css/custom.scss.
+- Les fichiers CSS personnalisés sont situés dans static/css/styles.css.
 
-## Architecture du projet
 
-```bash
-litrevu/
-├── authentication/        # Application de gestion des utilisateurs
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   ├── templates/authentication
-│
-├── litrevu/               # Configuration principale du projet Django
-│   ├── settings.py        # Paramètres globaux (BDD, apps, sécurité…)
-│   └── urls.py            # Routage principal des urls
-│
-├── reviews/               # App principale (tickets,critiques, feed...)
-│   ├── models/            # A l'intérieur des dossiers suivants, il y a un fichier par entité
-│   ├── views/
-│   ├── forms/             # Un fichier pour review et un pour ticket pour la personnalisation du formualaire 
-│   ├── templates/
-│   ├── templatetags/      # Gestion de l'affichage des étoiles pour la notation
-│
-├── static/                # Fichiers statiques (CSS, images)
-├── templates/             # Templates globaux (base.html, etc.)
-│── db.sqlite3             # Base de données SQLite (fournie pour les tests)
-├── manage.pypip ins
-├── requirements.txt       # Liste des dépendances du projet
-├── README.md              # Ce fichier
-```
 
 ## Technologies utilisées & qualité du code
 
 - Python 3.10.12
 - Django 5.2.1
 - SQLite (base intégrée pour test local)
-- Bootstrap 5 + Bootswatch United
+- Bootstrap 
 - Pillow (upload images)
 - Flake8 pour la vérification PEP8
-- Black pour le formatage automatique du code
 - Lighthouse pour vérifier l’accessibilité (WCAG)
 
 ###  Qualité du code
-- Formatage PEP8 automatisé avec black (line-length: 79)
 - Vérification de conformité avec flake8
-- Fichier setup.cfg pour paramétrer black et flacke8
+- Fichier .flake8 pour paramétrer flake8
 
 ##  Données de test
 
 Une base de données est intégrée afin de permettre les tests, voici les utilisateurs : 
 - root (administrateur) : root
-- fabien : erty159*
+- Paul : password123*
+- Jean : password124*
+- 
 
 
 

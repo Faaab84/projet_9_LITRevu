@@ -71,7 +71,7 @@ Une base de données est intégrée afin de permettre les tests, voici les utili
 - root (administrateur) : root
 - Paul : password123*
 - Jean : password124*
-- 
+- fabien : erty159*
 
 
 
